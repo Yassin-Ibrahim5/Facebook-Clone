@@ -2,6 +2,6 @@ import React from 'react';
 import styles from './Register.module.css';
 export default function Register() {
     return (
-        <div>Template Name</div>
+        <h2>Register</h2>
     );
 }

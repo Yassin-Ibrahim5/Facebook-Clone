@@ -1,7 +1,8 @@
 import './App.css'
 import Navbar from "./Components/Navbar/Navbar.jsx";
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Layout from "./Components/Layout/Layout.jsx";
+import Home from "./Components/Home/Home.jsx";
 
 export default function App() {
 
@@ -10,15 +11,14 @@ export default function App() {
             path: '',
             element: <Layout/>,
             children: [
+                {index: true, element: <Home/>},
 
             ]
         }
     ])
 
     return (
-        <>
-            <Navbar/>
-        </>
+        <RouterProvider router={routes}/>
     )
 }
 
