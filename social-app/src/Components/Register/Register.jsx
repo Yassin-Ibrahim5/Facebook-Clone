@@ -2,14 +2,28 @@ import React from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import * as z from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 export default function Register() {
+
+    const schema = z.object({
+        name: z.string().nonempty("Name is Required").min(3, "Name must be at least 3 characters"),
+        email: z.string().nonempty("Email is Required").email("Invalid Email"),
+        password: z.string().regex(/^[A-Z][a-zA-Z]{2,}@\d+$/, "Password must start with a capital letter, contain at least 3 letters, followed by @ and numbers").nonempty("Password is Required"),
+        rePassword: z.string().regex(/^[A-Z][a-zA-Z]{2,}@\d+$/, "Password must start with a capital letter, contain at least 3 letters, followed by @ and numbers").nonempty("Password is Required"),
+        dateOfBirth: z.string().nonempty("Date of Birth is Required"),
+        gender: z.enum(["male", "female"])
+    }).refine((data) => data.password === data.rePassword, {
+        message: "Passwords do not match",
+        path: ["rePassword"]
+    })
+
     let {
-        register,
-        handleSubmit,
-        formState: {errors, isSubmitting},
-        setError
-    } = useForm();
+        register, handleSubmit, formState: {errors, isSubmitting}, setError
+    } = useForm({
+        resolver: zodResolver(schema)
+    });
 
     let navigate = useNavigate();
 
@@ -34,32 +48,32 @@ export default function Register() {
         <div className="bg-white p-5 rounded-lg mx-auto mt-[10%] w-[50%]">
             <h3 className={`text-blue-800 text-2xl font-semibold`}>Register Now</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register("name", {required: "Name is Required"})} type="text" placeholder="Type your name.."
+                <input {...register("name")} type="text" placeholder="Type your name.."
                        className="input input-neutral w-full mt-5 rounded-lg focus:outline-none focus:border-2 focus:border-blue-800"/>
                 {errors.name && <p className="text-red-500 w-full mt-2">{errors.name.message}</p>}
-                <input {...register("email", {required: "Email is Required"})} type="text"
+                <input {...register("email")} type="text"
                        placeholder="Type your email.."
                        className="input input-neutral w-full mt-5 rounded-lg focus:outline-none focus:border-2 focus:border-blue-800"/>
                 {errors.email && <p className="text-red-500 w-full mt-2">{errors.email.message}</p>}
-                <input {...register("password", {required: "Password is Required"})} type="password"
+                <input {...register("password")} type="password"
                        placeholder="Type your password.."
                        className="input input-neutral w-full mt-5 rounded-lg focus:outline-none focus:border-2 focus:border-blue-800"/>
                 {errors.password && <p className="text-red-500 w-full mt-2">{errors.password.message}</p>}
-                <input {...register("rePassword", {required: "Please Confirm Your Password"})} type="password"
+                <input {...register("rePassword")} type="password"
                        placeholder="Confirm password.."
                        className="input input-neutral w-full mt-5 rounded-lg focus:outline-none focus:border-2 focus:border-blue-800"/>
                 {errors.rePassword && <p className="text-red-500 w-full mt-2">{errors.rePassword.message}</p>}
-                <input {...register("dateOfBirth", {required: "Date of Birth is Required"})} type="date"
+                <input {...register("dateOfBirth")} type="date"
                        placeholder="Date of birth.."
                        className="input input-neutral w-full mt-5 rounded-lg focus:outline-none focus:border-2 focus:border-blue-800"/>
                 {errors.dateOfBirth && <p className="text-red-500 w-full mt-2">{errors.dateOfBirth.message}</p>}
                 <div className="mt-2">
-                    <input {...register("gender", {required: "Gender is Required"})} type="radio" id={"male"}
+                    <input {...register("gender")} type="radio" id={"male"}
                            name="gender"
                            value={"male"}
                            className="radio radio-primary"/>
                     <label htmlFor={"male"} className={"px-2"}>Male</label>
-                    <input {...register("gender", {required: "Gender is Required"})} type="radio" id={"female"}
+                    <input {...register("gender")} type="radio" id={"female"}
                            name="gender"
                            value={"female"}
                            className="radio radio-primary"/>
