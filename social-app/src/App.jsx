@@ -6,6 +6,7 @@ import Home from "./Components/Home/Home.jsx";
 import Login from "./Components/Login/Login.jsx";
 import Register from "./Components/Register/Register.jsx";
 import NotFound from "./Components/NotFound/NotFound.jsx";
+import Posts from "./Components/Posts/Posts.jsx";
 
 export default function App() {
 
@@ -17,6 +18,7 @@ export default function App() {
                 {index: true, element: <Home/>},
                 {path: 'login', element: <Login/>},
                 {path: 'register', element: <Register/>},
+                {path: 'posts', element: <Posts/>},
                 {path: '*', element: <NotFound/>}
             ]
         }

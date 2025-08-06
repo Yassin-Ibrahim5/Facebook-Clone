@@ -4,9 +4,9 @@ import {Link, NavLink} from "react-router-dom";
 export default function Navbar() {
     return (
         <div>
-            <div className="navbar bg-base-100 shadow-sm">
+            <div className="navbar shadow-lg bg-base-100 mx-auto">
                 <div className="flex-1">
-                    <Link to={"/"} className="btn btn-ghost text-blue-800 text-2xl hover:bg-white hover:border-transparent hover:shadow-none">Linked Posts</Link>
+                    <Link to={"/"} className="btn btn-ghost text-blue-800 font-bold text-2xl hover:bg-white hover:border-transparent hover:shadow-none">Linked Posts</Link>
                 </div>
                 <div className="flex gap-2">
                     <div className="dropdown dropdown-end">
@@ -22,7 +22,8 @@ export default function Navbar() {
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <li><NavLink to={"/login"}>Login</NavLink></li>
                             <li><NavLink to="/register">Sign Up</NavLink></li>
-                            {/*<li><a>Logout</a></li>*/}
+                            <li><NavLink to="/posts">Posts</NavLink></li>
+                            <li><a>Logout</a></li>
                         </ul>
                     </div>
                 </div>
