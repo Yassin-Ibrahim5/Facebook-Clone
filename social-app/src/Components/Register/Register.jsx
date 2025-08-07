@@ -15,8 +15,7 @@ export default function Register() {
         dateOfBirth: z.string().nonempty("Date of Birth is Required"),
         gender: z.enum(["male", "female"])
     }).refine((data) => data.password === data.rePassword, {
-        message: "Passwords do not match",
-        path: ["rePassword"]
+        message: "Passwords do not match", path: ["rePassword"]
     })
 
     let {
