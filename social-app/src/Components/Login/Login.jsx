@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import axios from "axios";
+import {TokenContext} from "../../Contexts/TokenContext.jsx";
 
 export default function Login() {
+
+    let {token, setToken} = useContext(TokenContext);
 
     const schema = z.object({
         email: z.string().nonempty("Email is Required").email("Invalid Email"),
@@ -29,7 +32,10 @@ export default function Login() {
         try {
             let {data} = await axios.post('https://linked-posts.routemisr.com/users/signin', values);
             console.log(data);
+
             if (data.message === "success") {
+                localStorage.setItem("userToken", data.token);
+                setToken(data.token);
                 navigate("/");
             }
         } catch (error) {
