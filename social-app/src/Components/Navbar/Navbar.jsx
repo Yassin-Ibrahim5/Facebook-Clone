@@ -1,12 +1,25 @@
-import React from 'react';
-import {Link, NavLink} from "react-router-dom";
+import React, {useContext} from 'react';
+import {Link, NavLink, useNavigate} from "react-router-dom";
+import {TokenContext} from "../../Contexts/TokenContext.jsx";
 
 export default function Navbar() {
+
+    let {token, setToken} = useContext(TokenContext);
+
+    let navigate = useNavigate();
+
+    function logOut() {
+        localStorage.removeItem("userToken");
+        setToken(null);
+        navigate("/login");
+    }
     return (
         <div>
             <div className="navbar shadow-lg bg-base-100 mx-auto">
                 <div className="flex-1">
-                    <Link to={"/"} className="btn btn-ghost text-blue-800 font-bold text-2xl hover:bg-white hover:border-transparent hover:shadow-none">Linked Posts</Link>
+                    <Link to={"/"}
+                          className="btn btn-ghost text-blue-800 font-bold text-2xl hover:bg-white hover:border-transparent hover:shadow-none">Linked
+                        Posts</Link>
                 </div>
                 <div className="flex gap-2">
                     <div className="dropdown dropdown-end">
@@ -20,10 +33,21 @@ export default function Navbar() {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <li><NavLink to={"/login"}>Login</NavLink></li>
-                            <li><NavLink to="/register">Sign Up</NavLink></li>
-                            <li><NavLink to="/posts">Posts</NavLink></li>
-                            <li><a>Logout</a></li>
+
+                            {
+                                token ?
+                                    <>
+                                        <li><NavLink to={"/"}>Home</NavLink></li>
+                                        <li><NavLink to="/posts">Posts</NavLink></li>
+                                        <li><a onClick={() => {
+                                            logOut();
+                                        }}>Logout</a></li>
+                                    </> :
+                                    <>
+                                        <li><NavLink to={"/login"}>Login</NavLink></li>
+                                        <li><NavLink to="/register">Sign Up</NavLink></li>
+                                    </>
+                            }
                         </ul>
                     </div>
                 </div>

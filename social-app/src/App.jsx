@@ -7,6 +7,8 @@ import Login from "./Components/Login/Login.jsx";
 import Register from "./Components/Register/Register.jsx";
 import NotFound from "./Components/NotFound/NotFound.jsx";
 import Posts from "./Components/Posts/Posts.jsx";
+import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes.jsx";
+import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth.jsx";
 
 export default function App() {
 
@@ -15,10 +17,10 @@ export default function App() {
             path: '',
             element: <Layout/>,
             children: [
-                {index: true, element: <Home/>},
+                {index: true, element:<ProtectedRoutes><Home/></ProtectedRoutes>},
+                {path: 'posts', element: <ProtectedRoutes><Posts/></ProtectedRoutes>},
                 {path: 'login', element: <Login/>},
                 {path: 'register', element: <Register/>},
-                {path: 'posts', element: <Posts/>},
                 {path: '*', element: <NotFound/>}
             ]
         }
