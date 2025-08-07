@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './ProtectedAuth.module.css';
-export default function ProtectedAuth() {
-    return (
-        <div>ProtectedAuth</div>
-    );
+import {Navigate} from "react-router-dom";
+
+export default function ProtectedAuth(props) {
+    if (localStorage.getItem("userToken")) {
+        return <Navigate to={"/"}></Navigate>;
+    } else {
+        return props.children;
+    }
 }

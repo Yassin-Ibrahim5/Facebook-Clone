@@ -19,7 +19,7 @@ export default function App() {
             children: [
                 {index: true, element:<ProtectedRoutes><Home/></ProtectedRoutes>},
                 {path: 'posts', element: <ProtectedRoutes><Posts/></ProtectedRoutes>},
-                {path: 'login', element: <Login/>},
+                {path: 'login', element: <ProtectedAuth><Login/></ProtectedAuth>},
                 {path: 'register', element: <Register/>},
                 {path: '*', element: <NotFound/>}
             ]
