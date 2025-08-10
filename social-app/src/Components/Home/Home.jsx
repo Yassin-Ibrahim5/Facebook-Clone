@@ -1,14 +1,42 @@
-import React, {useContext} from 'react';
-import styles from './Home.module.css';
-import {TokenContext} from "../../Contexts/TokenContext.jsx";
+import React, {useContext, useEffect, useState} from 'react';
+import {PostContext} from "../../Contexts/PostContext.jsx";
+import Loader from "../Loader/Loader.jsx";
+import PostCard from "../PostCard/PostCard.jsx";
 
 
 function Home() {
 
-    let {token} = useContext(TokenContext);
-    console.log(token);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [allPosts, setAllPosts] = useState([]);
+    let {getAllPosts} = useContext(PostContext);
+
+    async function getPosts() {
+        let posts = await getAllPosts();
+        setAllPosts(posts);
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        getPosts();
+        console.log(allPosts);
+    }, []);
+
+
     return (
-        <h2 className={"text-center"}>Home</h2>
+        <>
+            {isLoading ? <Loader/> :
+                <div className="container mx-auto">
+                    <div className="flex justify-center items-center">
+                        <div className="w-full">
+                            {
+                                allPosts.map((post) => <PostCard post={post}/>)
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </>
     );
 }
 
