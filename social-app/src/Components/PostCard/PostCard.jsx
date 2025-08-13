@@ -5,9 +5,12 @@ import {Link} from "react-router-dom";
 export default function PostCard({post}) {
     const [showComments, setShowComments] = useState(false);
 
+    if (!post) {
+        return null;
+    }
     return (
         <div className="card bg-base-100 shadow-md p-4 max-w-xl mx-auto my-6">
-            <Link to={`/postDetails`}>
+            <Link to={`/postDetails/${post._id}`}>
                 <div className="flex items-center gap-3 mb-3">
                     <div className="avatar">
                         <div className="w-10 rounded-full">

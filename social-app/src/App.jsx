@@ -20,7 +20,7 @@ export default function App() {
             children: [
                 {index: true, element:<ProtectedRoutes><Home/></ProtectedRoutes>},
                 {path: 'posts', element: <ProtectedRoutes><Posts/></ProtectedRoutes>},
-                {path: 'postDetails', element: <ProtectedRoutes><PostDetails/></ProtectedRoutes>},
+                {path: 'postDetails/:id', element: <ProtectedRoutes><PostDetails/></ProtectedRoutes>},
                 {path: 'login', element: <ProtectedAuth><Login/></ProtectedAuth>},
                 {path: 'register', element: <ProtectedAuth><Register/></ProtectedAuth>},
                 {path: '*', element: <NotFound/>}
