@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {PostContext} from "../../Contexts/PostContext.jsx";
 import Loader from "../Loader/Loader.jsx";
 import PostCard from "../PostCard/PostCard.jsx";
+import AddPost from "../AddPost/AddPost.jsx";
 
 
 function Home() {
@@ -26,15 +27,18 @@ function Home() {
     return (
         <>
             {isLoading ? <Loader/> :
-                <div className="container mx-auto">
-                    <div className="flex justify-center items-center">
-                        <div className="w-full">
-                            {
-                                allPosts.map((post) => <PostCard key={post.id} post={post}/>)
-                            }
+                <>
+                    <AddPost/>
+                    <div className="container mx-auto">
+                        <div className="flex justify-center items-center">
+                            <div className="w-full">
+                                {
+                                    allPosts.map((post) => <PostCard key={post.id} post={post}/>)
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             }
         </>
     );
