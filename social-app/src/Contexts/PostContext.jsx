@@ -86,8 +86,22 @@ export default function PostContextProvider({children}) {
         }
     }
 
+    async function deletePost(id) {
+        try {
+            let {data} = await axios.delete(`https://linked-posts.routemisr.com/posts/${id}`, {
+                headers
+            });
+            console.log(data, "delete post");
+            toast.success("Post Deleted Successfully!");
+            // return data.comments;
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    }
 
-    return (<PostContext.Provider value={{getAllPosts, getSinglePost, getUserData, getUserPosts, addComment, addPosts}}>
+
+    return (<PostContext.Provider value={{getAllPosts, getSinglePost, getUserData, getUserPosts, addComment, addPosts, deletePost}}>
         {children}
     </PostContext.Provider>);
 }

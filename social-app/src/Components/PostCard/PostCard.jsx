@@ -23,6 +23,7 @@ export default function PostCard({post}) {
         setComments([...comments, response]);
     }
     return (<div className="card bg-base-100 shadow-md p-4 max-w-xl mx-auto my-6">
+        <button onClick={() => {}} className={`text-blue-800 bg-slate-300 p-3 absolute top-0 right-0 cursor-pointer`}>X</button>
         <Link to={`/postDetails/${post._id}`}>
             <div className="flex items-center gap-3 mb-3">
                 <div className="avatar">
