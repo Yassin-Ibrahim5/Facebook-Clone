@@ -93,7 +93,7 @@ export default function PostContextProvider({children}) {
             });
             console.log(data, "delete post");
             toast.success("Post Deleted Successfully!");
-            // return data.comments;
+            return data.post;
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
@@ -101,7 +101,8 @@ export default function PostContextProvider({children}) {
     }
 
 
-    return (<PostContext.Provider value={{getAllPosts, getSinglePost, getUserData, getUserPosts, addComment, addPosts, deletePost}}>
+    return (<PostContext.Provider
+        value={{getAllPosts, getSinglePost, getUserData, getUserPosts, addComment, addPosts, deletePost}}>
         {children}
     </PostContext.Provider>);
 }

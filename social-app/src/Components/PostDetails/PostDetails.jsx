@@ -29,7 +29,7 @@ export default function PostDetails() {
                 isLoading ? <Loader/> :
                     <div className={`container`}>
                         <div className="flex">
-                            <PostCard post={singlePost}/>
+                            {!singlePost ? null : <PostCard post={singlePost}/>}
                         </div>
                     </div>
             }
