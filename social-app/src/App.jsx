@@ -9,6 +9,7 @@ import NotFound from "./Components/NotFound/NotFound.jsx";
 import Posts from "./Components/Posts/Posts.jsx";
 import ProtectedRoutes from "./Components/ProtectedRoutes/ProtectedRoutes.jsx";
 import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth.jsx";
+import PostDetails from "./Components/PostDetails/PostDetails.jsx";
 
 export default function App() {
 
@@ -19,6 +20,7 @@ export default function App() {
             children: [
                 {index: true, element:<ProtectedRoutes><Home/></ProtectedRoutes>},
                 {path: 'posts', element: <ProtectedRoutes><Posts/></ProtectedRoutes>},
+                {path: 'postDetails', element: <ProtectedRoutes><PostDetails/></ProtectedRoutes>},
                 {path: 'login', element: <ProtectedAuth><Login/></ProtectedAuth>},
                 {path: 'register', element: <ProtectedAuth><Register/></ProtectedAuth>},
                 {path: '*', element: <NotFound/>}
