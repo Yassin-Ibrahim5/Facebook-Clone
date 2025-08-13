@@ -30,7 +30,7 @@ function Home() {
                     <div className="flex justify-center items-center">
                         <div className="w-full">
                             {
-                                allPosts.map((post) => <PostCard post={post}/>)
+                                allPosts.map((post) => <PostCard key={post.id} post={post}/>)
                             }
                         </div>
                     </div>

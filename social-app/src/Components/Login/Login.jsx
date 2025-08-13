@@ -8,7 +8,7 @@ import {TokenContext} from "../../Contexts/TokenContext.jsx";
 
 export default function Login() {
 
-    let {token, setToken} = useContext(TokenContext);
+    let {setToken} = useContext(TokenContext);
 
     const schema = z.object({
         email: z.string().nonempty("Email is Required").email("Invalid Email"),
