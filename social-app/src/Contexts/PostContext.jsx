@@ -39,7 +39,7 @@ export default function PostContextProvider({children}) {
             let {data} = await axios.get('https://linked-posts.routemisr.com/users/profile-data', {
                 headers
             });
-            console.log(data, "user data");
+            // console.log(data, "user data");
             return data.user;
         } catch (error) {
             console.log(error);
@@ -79,7 +79,7 @@ export default function PostContextProvider({children}) {
             });
             console.log(data, "add post");
             toast.success("Post Added Successfully!");
-            // return data.comments;
+            return data.post;
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");

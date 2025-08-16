@@ -1,17 +1,27 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import defaultUserImage from "../../assets/default-profile.png";
 import {Link} from "react-router-dom";
 import {PostContext} from "../../Contexts/PostContext.jsx";
 
-export default function PostCard({post}) {
+export default function PostCard({post, callback}) {
     const [showComments, setShowComments] = useState(false);
     const [commentsVisibility, setCommentsVisibility] = useState(1);
     const [commentContent, setCommentContent] = useState("");
     const [comments, setComments] = useState(post.comments);
-    const {addComment, deletePost} = useContext(PostContext);
-
+    const [currentUserId, setCurrentUserId] = useState(null);
+    const {addComment, deletePost, getUserData} = useContext(PostContext);
     if (!post) {
         return null;
+    }
+
+    useEffect(() => {
+        getCurrentUserId();
+    })
+
+    async function getCurrentUserId() {
+        let response = await getUserData();
+        setCurrentUserId(response._id);
+        return response._id;
     }
 
     async function handleAddComment(e) {
@@ -26,14 +36,36 @@ export default function PostCard({post}) {
     async function handleDeletePost(id) {
         let response = await deletePost(id);
         console.log(response);
-
+        callback();
     }
 
     return (<div className="card bg-base-100 shadow-md p-4 max-w-xl mx-auto my-6">
-        <button onClick={() => {
-            handleDeletePost(post._id);
-        }} className={`text-blue-800 bg-slate-300 p-3 absolute top-0 right-0 cursor-pointer`}>X
-        </button>
+        {
+            post.user._id === currentUserId &&
+            <button onClick={() => {
+                document.getElementById("my_modal_1").showModal();
+            }} className={`text-blue-800 bg-slate-300 p-3 absolute top-0 right-0 cursor-pointer`}>X
+            </button>
+        }
+        <dialog id="my_modal_1" className="modal">
+            <div className="modal-box">
+                <h3 className="font-bold text-lg text-red-500">Delete Post</h3>
+                <p className="py-4">Are you sure you want to delete this post?</p>
+                <div className="modal-action flex justify-start gap-3">
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                    }} method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn bg-red-500 text-white me-4 hover:bg-red-600 transition-all-300"
+                                onClick={() => {
+                                    handleDeletePost(post._id);
+                                }}>Delete
+                        </button>
+                        <button className="btn bg-slate border-black">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
         <Link to={`/postDetails/${post._id}`}>
             <div className="flex items-center gap-3 mb-3">
                 <div className="avatar">
